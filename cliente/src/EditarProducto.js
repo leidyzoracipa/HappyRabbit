@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 function EditarProducto(){
 
@@ -9,10 +10,13 @@ function EditarProducto(){
     const[nombreproductos, setNombreproductos]=useState('')
     const[codigoproductos, setcodigoproductos]=useState('')
     const[descripcion, setdescripcion]=useState('')
+
+    //para volver atras al index
+    const navegar=useNavigate()
     
 
     useEffect(() => {
-        axios.post('/api/productos/obtenerdataproductos', {idproductos: params.idproducto}).then(res =>{
+        axios.post('/api/productos/obtenerdataproductos', {idProductos: params.idProductos}).then(res =>{
             console.log(res.data[0])
             const dataProductos = res.data[0]
             setNombreproductos(dataProductos.nombreproductos)
@@ -30,7 +34,7 @@ function EditarProducto(){
             nombreproductos:nombreproductos,
             codigoproductos:codigoproductos,
             descripcion:descripcion,
-            idproductos:params.idproductos
+            idProductos:params.idProductos
         }
 
 
@@ -38,7 +42,9 @@ function EditarProducto(){
         axios.post('/api/productos/actualizaproducto',actualizarproducto)
         .then(res => {
             console.log(res.data)
-            alert(res.data)
+            //alert(res.data)
+            Swal.fire('Exito',' el producto se edito correctamente')
+            navegar('/')
         })
         .then(err => {console.log(err)})
     }
@@ -67,7 +73,7 @@ function EditarProducto(){
                     <input type="text" className="form-control"value={descripcion} onChange={(e) =>{setdescripcion(e.target.value)}}></input>
                 </div>
 
-                <button onClick={EditarProducto}className='btn btn-info'>Editar producto</button>
+                <button onClick={editarProducto}className='btn btn-info'>Editar producto</button>
             </div>
         </div>
     </div>

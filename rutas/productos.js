@@ -50,7 +50,7 @@ router.get('/obtenerproductos',(req, res)=>{
 
 //obtener data de usuario
 router.post('/obtenerdataproductos',(req, res)=>{
-    ModelProducto.find({idproductos:req.body.idproductos}, function(docs, err){
+    ModelProducto.find({idProductos:req.body.idProductos}, function(docs, err){
         if(!err){
             res.send(docs)
         }else{
@@ -59,19 +59,31 @@ router.post('/obtenerdataproductos',(req, res)=>{
     })
 })
 
-//Agregar producto
+//actualizar producto
 router.post('/actualizaproducto',(req,res)=>{
     
-    ModelProducto.findOneAndUpdate({idproductos:req.body.idproductos},{
+    ModelProducto.findOneAndUpdate({idProductos:req.body.idProductos},{
         nombreproductos:req.body.nombreproductos,
         codigoproductos:req.body.codigoproductos,
         descripcion:req.body.descripcion,    
     }, (err) => {
         if(!err){
-            res.setDefaultEncoding('usuario actualizado correctamente')
+            res.send('producto actualizado correctamente')
         }else{
             res.send(err)
         }
     })
 })
 
+
+//borrar producto
+router.post('/borrarproducto',(req,res)=>{
+    
+    ModelProducto.findOneAndDelete({idProductos:req.body.idProductos}, (err)=> {
+        if(!err){
+            res.send('producto borrado correctamente')
+        }else{
+            res.send(err)
+        }
+    })
+})

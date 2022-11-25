@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import ListaProductos from './ListaProductos'
 import uniquid from 'uniqid'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 function AgregarProducto(){
 
@@ -21,7 +22,8 @@ function AgregarProducto(){
 
         axios.post('/api/productos/agregarproducto',producto)
         .then(res => {
-            alert(res.data)
+            //alert(res.data)
+            Swal.fire('Correcto','El producto se agrego con exito')
         })
         .then(err => {console.log(err)})
     }
